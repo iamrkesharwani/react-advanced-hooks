@@ -13,7 +13,7 @@ const Item = ({ id, title, amount, category, date, image }) => {
         <h3 className="item-title" title={title}>
           {title}
         </h3>
-        <p className="item-amount">${amount.toFixed(2)}</p>
+        <p className="item-amount">₹{amount.toFixed(2)}</p>
       </div>
     </div>
   );

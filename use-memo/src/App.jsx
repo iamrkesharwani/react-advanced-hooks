@@ -131,7 +131,7 @@ const App = () => {
           {Object.entries(categoryTotals).map(([cat, amount]) => (
             <div key={cat} className="summary-tile">
               <span className="summary-cat-name">{cat}</span>
-              <span className="summary-cat-amount">${amount}</span>
+              <span className="summary-cat-amount">₹{amount}</span>
             </div>
           ))}
         </div>
