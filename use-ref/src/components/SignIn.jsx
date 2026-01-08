@@ -1,12 +1,43 @@
 import { Mail, Lock } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const SignIn = ({ setIsLogin }) => {
-  const emailRef = useRef(null);
+  const [error, setError] = useState('');
 
-  useEffect(()=>{
-    emailRef.current.focus()
-  }, [])
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const rememberRef = useRef();
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = {
+      email: emailRef.current.value.trim(),
+      password: passwordRef.current.value.trim(),
+      rememberMe: rememberRef.current.checked,
+    };
+
+    if (!formData.email) {
+      setError('Email is required');
+      emailRef.current.focus();
+      return;
+    }
+
+    if (!formData.password) {
+      setError('Password is required');
+      passwordRef.current.focus();
+      return;
+    }
+
+    setError('');
+    console.log(formData);
+    emailRef.current.value = '';
+    passwordRef.current.value = '';
+    rememberRef.current.checked = false;
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -15,7 +46,7 @@ const SignIn = ({ setIsLogin }) => {
         <p className="text-gray-600">Sign in to your account</p>
       </div>
 
-      <form className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label
             htmlFor="login-email"
@@ -24,7 +55,7 @@ const SignIn = ({ setIsLogin }) => {
             Email Address
           </label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Mail className="absolute left-3 top-3.5 text-gray-400 w-5 h-5" />
             <input
               id="login-email"
               ref={emailRef}
@@ -43,10 +74,11 @@ const SignIn = ({ setIsLogin }) => {
             Password
           </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Lock className="absolute left-3 top-3.5 text-gray-400 w-5 h-5" />
             <input
               id="login-password"
               type="password"
+              ref={passwordRef}
               placeholder="••••••••"
               className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
             />
@@ -56,6 +88,7 @@ const SignIn = ({ setIsLogin }) => {
         <div className="flex items-center justify-between text-sm">
           <label className="flex items-center">
             <input
+              ref={rememberRef}
               type="checkbox"
               className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
             />
@@ -68,6 +101,10 @@ const SignIn = ({ setIsLogin }) => {
             Forgot password?
           </a>
         </div>
+
+        {error && (
+          <p className="text-red-500 text-sm mt-2 font-semibold">{error}</p>
+        )}
 
         <button
           type="submit"
