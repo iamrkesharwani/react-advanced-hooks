@@ -1,4 +1,4 @@
-const Hero = ({ isLoading, isError, searchTerm, setSearchTerm }) => {
+const Hero = ({ isLoading, isError, searchTerm, onSearchChange }) => {
   return (
     <div className="hero-container">
       <div className="hero-content">
@@ -7,11 +7,11 @@ const Hero = ({ isLoading, isError, searchTerm, setSearchTerm }) => {
           className="hero-input"
           placeholder="Search..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => onSearchChange(e.target.value)}
         />
 
         {searchTerm && (
-          <button className="hero-button" onClick={() => setSearchTerm('')}>
+          <button className="hero-button" onClick={() => onSearchChange('')}>
             Clear
           </button>
         )}
