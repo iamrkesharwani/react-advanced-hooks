@@ -1,7 +1,9 @@
 import Card from './Card';
 
 const CardContainer = ({ data }) => {
-  if (!data) return null;
+  if (!data.length) {
+    return <p className="no-data">No results found</p>;
+  }
 
   return (
     <div className="card-container">
